@@ -1,0 +1,44 @@
+{
+  "slug": "mechanical-assembly",
+  "name": "Mechanical Assembly",
+  "applicable_types": ["DFMEA", "PFMEA"],
+  "keywords": ["gear", "bearing", "fastener", "shaft", "housing", "assembly", "press-fit", "weld", "bracket", "driveshaft"],
+  "structure_example": "System > Subsystem > Component > Part, e.g. Drivetrain > Transmission > Gear Set > Output Gear / Bearing / Shaft",
+  "function_example": "Transmits rotational torque from the input shaft to the output shaft at a specified ratio with minimal backlash",
+  "failure_chains_starter": [
+    {
+      "fe": "Drivetrain develops noise and eventually loses torque transfer",
+      "fm": "Gear tooth pitting and premature wear",
+      "fc": "Case-hardening depth is below the design specification",
+      "s_hint": 7,
+      "o_hint": 3,
+      "d_hint": 4,
+      "pc": "Heat-treat process parameters locked via DOE; supplier PPAP requirement on case depth",
+      "dc": "Destructive case-depth sectioning at a defined sampling frequency",
+      "category_4m": "Method"
+    },
+    {
+      "fe": "Bearing assembly fails prematurely in service",
+      "fm": "Bearing preload out of specification after press-fit assembly",
+      "fc": "Press force sensor drifted out of calibration",
+      "s_hint": 7,
+      "o_hint": 5,
+      "d_hint": 6,
+      "pc": "Calibration schedule for press-force sensors + SPC on press force",
+      "dc": "In-station force-displacement monitoring with automatic reject on out-of-band curves",
+      "category_4m": "Machine"
+    },
+    {
+      "fe": "Structural bracket fails under load, risking component detachment",
+      "fm": "Weld joint fracture",
+      "fc": "Weld penetration below specification due to incorrect welding parameters",
+      "s_hint": 8,
+      "o_hint": 4,
+      "d_hint": 5,
+      "pc": "Welding parameter SOP + operator certification program",
+      "dc": "Ultrasonic weld inspection at a defined sampling frequency",
+      "category_4m": "Man"
+    }
+  ],
+  "special_characteristics_guidance": "Load-bearing structural joints (welds, press-fits, fasteners in the load path) are the most common source of high-severity chains in this domain. Torque and press-force parameters are frequent SC candidates that belong on the control plan."
+}
