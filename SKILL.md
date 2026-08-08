@@ -87,23 +87,54 @@ Each failure chain needs: `fe`, `fm`, `fc`, `s`, `o`, `d`, `pc` (prevention cont
 - **D**: default to "validated test method, pass/fail" (6) unless a stronger or weaker detection method is implied.
 - **AP**: computed, never guessed — apply the rule table in `references/sod_scoring_tables.md` §3.
 
-### Step 4 — Compute AP and generate the report
+### Step 4 — Build the analysis: one-shot or incremental
 
-Determine AP for every chain via the rule table (S/O/D bands, see references), then call the generator:
+Two ways to assemble the chains, pick based on how the conversation is going:
+
+**One-shot** — you already have all the chains (from a template, from auto-fill, or the user dumped everything at once). Write them straight to a `chains.json` file and skip to Step 5.
+
+**Incremental** (preferred when the user is thinking through failure modes one at a time, revising scores as the discussion develops, or wants to track action-item status over a longer session) — use `scripts/fmea_project.py`, a stateful tracker that persists the project to a JSON file between tool calls:
+
+```bash
+python scripts/fmea_project.py --action create --project "Front Bumper PFMEA" \
+  --type PFMEA --item "Front Bumper Assembly" --customer "Acme Motors" \
+  --process-name "Injection Molding" --template mechanical-assembly
+
+python scripts/fmea_project.py --action add --project "Front Bumper PFMEA" \
+  --fe "..." --fm "..." --fc "..." --s 6 --o 4 --d 5 \
+  --process-step "Injection Molding" --category-4m Machine --pc "..." --dc "..."
+
+python scripts/fmea_project.py --action list --project "Front Bumper PFMEA"
+python scripts/fmea_project.py --action update --project "Front Bumper PFMEA" --item-id 1 --d 2 --action-status Implemented
+python scripts/fmea_project.py --action high-priority --project "Front Bumper PFMEA"
+```
+
+Each `add`/`update` computes AP immediately and reports it back, so you can tell the user the risk level of a chain as soon as they describe it, without waiting until the whole analysis is done.
+
+### Step 5 — Generate the report
+
+When the tracker is used, bridge it into the report generator instead of hand-building `chains.json`:
+
+```bash
+python scripts/fmea_project.py --action export --project "Front Bumper PFMEA" \
+  --format report-input --output-dir ./output
+```
+
+This writes `chains.json` from the tracked items and prints the exact `generate_fmea.py` command to run next (pre-filled with the project's meta fields). Then run it:
 
 ```bash
 python scripts/generate_fmea.py \
-  --type DFMEA \
-  --item "Front Headlamp LED Module" \
+  --type PFMEA \
+  --item "Front Bumper Assembly" \
   --customer "Acme Motors" \
-  --template electronic-electrical \
-  --chains chains.json \
+  --template mechanical-assembly \
+  --chains ./output/Front_Bumper_PFMEA_chains.json \
   --output-dir ./output
 ```
 
 `chains.json` is a list of failure-chain objects (see `scripts/generate_fmea.py --help` for the exact schema). The script produces `<item>_FMEA.xlsx` (one worksheet: header, structure, function, failure analysis, risk analysis with S/O/D/AP, optimization actions, and a conditional-formatted risk view) and `<item>_FMEA.docx` (a readable narrative version organized by the seven steps).
 
-### Step 5 — Summarize for the user
+### Step 6 — Summarize for the user
 
 After generating, report back in prose (not just "done"):
 
@@ -133,7 +164,8 @@ After generating, report back in prose (not just "done"):
 pfmea-dfmea-skill/
 ├── SKILL.md                        this file
 ├── scripts/
-│   └── generate_fmea.py            xlsx + docx report generator
+│   ├── generate_fmea.py            xlsx + docx report generator (one-shot, from a chains.json)
+│   └── fmea_project.py             stateful project tracker (incremental: create/add/list/update/high-priority/export)
 ├── references/
 │   ├── seven_step_guide.md         what each of the 7 steps produces, common mistakes
 │   ├── sod_scoring_tables.md       S/O/D 10-point tables + AP rule table
