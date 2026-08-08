@@ -1,0 +1,33 @@
+{
+  "slug": "surface-treatment",
+  "name": "Surface Treatment",
+  "applicable_types": ["PFMEA"],
+  "keywords": ["plating", "heat treatment", "heat-treat", "anodizing", "quench", "case hardening", "electroplating", "oxidation"],
+  "structure_example": "Process > Step > Work element, e.g. Plating Line > Electroplating Bath > Machine (rectifier/bath) / Method (current density) / Material (plating solution)",
+  "function_example": "Deposits a corrosion-resistant coating of specified thickness uniformly across the part surface",
+  "failure_chains_starter": [
+    {
+      "fe": "Plated fastener corrodes prematurely in service, weakening the joint",
+      "fm": "Insufficient plating thickness on the threaded region",
+      "fc": "Plating bath current density set below the qualified process window",
+      "s_hint": 6,
+      "o_hint": 5,
+      "d_hint": 6,
+      "pc": "Process parameter SOP with tolerance band + operator training",
+      "dc": "X-ray fluorescence thickness check per lot + first-piece verification each shift",
+      "category_4m": "Method"
+    },
+    {
+      "fe": "Heat-treated component distorts, causing a downstream assembly fit issue",
+      "fm": "Excessive quench distortion",
+      "fc": "Non-uniform quench flow from a partially clogged quench tank nozzle",
+      "s_hint": 5,
+      "o_hint": 4,
+      "d_hint": 5,
+      "pc": "Preventive maintenance schedule for quench nozzles",
+      "dc": "CMM dimensional check on a defined sampling plan post-heat-treat",
+      "category_4m": "Machine"
+    }
+  ],
+  "special_characteristics_guidance": "Coating thickness and case-hardening depth on load-bearing or corrosion-critical features are the most common SC candidates in this domain."
+}
