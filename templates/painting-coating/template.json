@@ -1,0 +1,33 @@
+{
+  "slug": "painting-coating",
+  "name": "Painting / Coating",
+  "applicable_types": ["PFMEA"],
+  "keywords": ["paint", "coating", "e-coat", "powder coat", "spray", "primer", "clear coat", "basecoat"],
+  "structure_example": "Process > Step > Work element, e.g. Paint Line > Spray Booth > Environment (humidity/temperature) / Method (spray parameters) / Material (paint batch)",
+  "function_example": "Applies a uniform, defect-free coating of specified film thickness that meets color and gloss requirements",
+  "failure_chains_starter": [
+    {
+      "fe": "Visible paint defect on a customer-facing surface, perceived as poor quality",
+      "fm": "Orange peel / uneven paint texture",
+      "fc": "Booth humidity outside the qualified spray window",
+      "s_hint": 3,
+      "o_hint": 5,
+      "d_hint": 5,
+      "pc": "Booth humidity control system with alarm on excursion",
+      "dc": "100% visual inspection under standard lighting/angle + periodic gloss-meter audit",
+      "category_4m": "Environment"
+    },
+    {
+      "fe": "Coated part fails salt-spray corrosion testing, risking warranty claims",
+      "fm": "Insufficient coating adhesion",
+      "fc": "Substrate surface contamination not fully removed before coating",
+      "s_hint": 6,
+      "o_hint": 4,
+      "d_hint": 6,
+      "pc": "Pretreatment bath chemistry SPC + tank concentration monitoring",
+      "dc": "Cross-hatch adhesion test per sampling frequency + salt-spray audit testing",
+      "category_4m": "Material"
+    }
+  ],
+  "special_characteristics_guidance": "Film thickness and cure temperature/time on corrosion-critical or customer-visible surfaces are the most common SC candidates in this domain."
+}
