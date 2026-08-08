@@ -1,0 +1,44 @@
+{
+  "slug": "electronic-electrical",
+  "name": "Electronic / Electrical",
+  "applicable_types": ["DFMEA", "PFMEA"],
+  "keywords": ["ecu", "controller", "sensor", "wiring harness", "pcb", "pcba", "circuit", "connector", "led", "driver ic"],
+  "structure_example": "System > Subsystem > Component > Part, e.g. Lighting System > Headlamp > LED Module > LED Driver IC / PCB / Connector / Heat Sink",
+  "function_example": "Converts electrical energy into a regulated light output within a specified lumen and color-temperature range",
+  "failure_chains_starter": [
+    {
+      "fe": "Exterior lighting fails during night driving, increasing collision risk",
+      "fm": "LED driver module open circuit",
+      "fc": "Solder joint on the driver IC cracks under thermal cycling stress",
+      "s_hint": 10,
+      "o_hint": 4,
+      "d_hint": 6,
+      "pc": "Thermal simulation at design review + solder joint reliability design rules",
+      "dc": "1000-hour thermal cycling test + post-test cross-section inspection",
+      "category_4m": "Machine"
+    },
+    {
+      "fe": "Display shows corrupted or frozen image, distracting the driver",
+      "fm": "Display controller intermittent reset",
+      "fc": "Insufficient decoupling capacitance causes voltage droop under peak load",
+      "s_hint": 4,
+      "o_hint": 5,
+      "d_hint": 5,
+      "pc": "Power integrity simulation at design review",
+      "dc": "Bench-level load-transient test on prototype boards",
+      "category_4m": "Method"
+    },
+    {
+      "fe": "Wiring harness connection fails intermittently in service",
+      "fm": "Connector pin loses contact under vibration",
+      "fc": "Crimp force out of specification during assembly",
+      "s_hint": 7,
+      "o_hint": 5,
+      "d_hint": 6,
+      "pc": "Crimp force monitoring with automatic reject on the crimping press",
+      "dc": "Pull-force test on a sampling basis + first-piece verification",
+      "category_4m": "Machine"
+    }
+  ],
+  "special_characteristics_guidance": "Safety-relevant circuits (lighting, braking-adjacent sensors, airbag interfaces) are the most common source of S=9-10 chains in this domain — expect CC flags there. EMC/regulatory compliance failures are a common source of S=9."
+}
