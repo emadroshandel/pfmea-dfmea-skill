@@ -1,0 +1,22 @@
+{
+  "slug": "generic-fmea",
+  "name": "Generic / Fallback",
+  "applicable_types": ["DFMEA", "PFMEA"],
+  "keywords": [],
+  "structure_example": "System/Process > Subsystem/Step > Component/Work-element > Part (fill in with the user's actual structure)",
+  "function_example": "[replace with the item's actual primary function, stated as 'active verb + measurable requirement']",
+  "failure_chains_starter": [
+    {
+      "fe": "[replace with the actual effect on the end user/next process]",
+      "fm": "[replace with the specific way the function is lost or degraded]",
+      "fc": "[replace with the specific root cause; classify by 4M/6M for PFMEA]",
+      "s_hint": null,
+      "o_hint": null,
+      "d_hint": null,
+      "pc": "[replace with the current prevention control, or 'none identified']",
+      "dc": "[replace with the current detection control, or 'none identified']",
+      "category_4m": null
+    }
+  ],
+  "special_characteristics_guidance": "No domain-specific guidance available — apply the general S=9-10 (CC) / S=8 with AP=H or M (SC) rule from SKILL.md §5."
+}
